@@ -439,9 +439,9 @@ pub unsafe fn parse_8_chars(s: &[u8]) -> Result<u32, Pie> {
     debug_assert!(s.len() >= 8);
     const MASK_HI: u64 = 0xf0f0f0f0f0f0f0f0u64;
     const ASCII_ZEROS: u64 = 0x3030303030303030u64;
-
+    let ptr = s.as_ptr();
     let chunk = unsafe {
-        let ptr = s.as_ptr();
+        
         debug_assert!(ptr as usize % core::mem::size_of::<u64>() == 0);
         // (if ptr as usize % core::mem::size_of::<u64>() == 0 {
         *(ptr as *const u64)
@@ -549,9 +549,9 @@ pub unsafe fn parse_4_chars(s: &[u8]) -> Result<u16, Pie> {
 
     const MASK_HI: u32 = 0xf0f0f0f0u32;
     const ASCII_ZEROS: u32 = 0x30303030u32;
-
+    let ptr = s.as_ptr() as usize;
     let chunk1 = unsafe {
-        let ptr = s.as_ptr() as usize;
+        
         debug_assert!(ptr as usize % core::mem::size_of::<u32>() == 0);
         // (if ptr % size == 0 {
         *(s.as_ptr() as *const u32)
